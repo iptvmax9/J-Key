@@ -1,17 +1,24 @@
-name: JioTV Widevine Key Fetch
+name: JioTV Widevine Coo.json Fetch
 
 on:
   workflow_dispatch:
     inputs:
-      channel_id:
-        description: "JioTV Channel ID"
+      channel_limit:
+        description: "Channel limit (0 = all channels, 5 = test first 5)"
         required: true
-        default: "1132"
+        default: "0"
+      request_delay:
+        description: "Delay between requests in seconds (e.g. 0.2)"
+        required: true
+        default: "0.2"
   schedule:
     - cron: "0 */6 * * *"
 
+permissions:
+  contents: write
+
 jobs:
-  fetch-key:
+  fetch-coo-keys:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -28,19 +35,33 @@ jobs:
       - name: Check device.wvd
         run: ls -lh device.wvd
 
-      - name: Fetch Widevine KID:KEY
+      - name: Run fetch_wv_key.py to generate Coo.json
         env:
-          CHANNEL_ID: ${{ github.event.inputs.channel_id || '1132' }}
+          JIODATA_URL: "https://mitthu786.github.io/tvepg/jiotv/jiodata.json"
           AA_BASE: "https://iptvmax.site/Premium/jio/aa.php"
           WV_BASE: "https://iptvmax.site/Premium/jio/wv.php"
           WVD_PATH: "device.wvd"
+          OUT_FILE: "Coo.json"
+          CHANNEL_LIMIT: ${{ github.event.inputs.channel_limit || '0' }}
+          REQUEST_DELAY: ${{ github.event.inputs.request_delay || '0.2' }}
         run: python3 fetch_wv_key.py
 
-      - name: Upload result artifact
+      - name: Check generated Coo.json
+        run: |
+          ls -lh Coo.json
+          head -n 30 Coo.json
+
+      - name: Commit and push Coo.json to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Coo.json
+          git diff --staged --quiet || (git commit -m "Update Coo.json" && git push)
+
+      - name: Upload Coo.json artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: wv-keys-${{ github.event.inputs.channel_id || '1132' }}
-          path: |
-            wv_result.json
-            wv_keys.txt
+          name: jio-coo-keys
+          path: Coo.json
+          
