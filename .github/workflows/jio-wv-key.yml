@@ -1,0 +1,48 @@
+name: JioTV Widevine Key Fetch
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel_id:
+        description: "JioTV Channel ID"
+        required: true
+        default: "1132"
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  fetch-key:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pywidevine
+
+      - name: Decode WVD from secret
+        if: ${{ secrets.WVD_B64 != '' }}
+        run: |
+          echo "${{ secrets.WVD_B64 }}" | base64 -d > device.wvd
+
+      - name: Fetch Widevine KID:KEY
+        env:
+          CHANNEL_ID: ${{ github.event.inputs.channel_id || '1132' }}
+          AA_BASE: "https://iptvmax.site/Premium/jio/aa.php"
+          WV_BASE: "https://iptvmax.site/Premium/jio/wv.php"
+          WVD_PATH: "device.wvd"
+        run: python3 fetch_wv_key.py
+
+      - name: Upload result artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wv-keys-${{ github.event.inputs.channel_id || '1132' }}
+          path: |
+            wv_result.json
+            wv_keys.txt
