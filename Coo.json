@@ -1,0 +1,44 @@
+{
+    "keys": [
+        {
+            "kty": "oct",
+            "kid": "zYnmkKolWtiugyqKtrcsUg",
+            "k": "0jNLx5PaD8lziP6g_K-wUg",
+            "hex_kid": "cd89e690aa255ad8ae832a8ab6b72c52",
+            "hex_k": "d2334bc793da0fc97388fea0fcafb052",
+            "hex_pair": "cd89e690aa255ad8ae832a8ab6b72c52:d2334bc793da0fc97388fea0fcafb052"
+        },
+        {
+            "kty": "oct",
+            "kid": "XE849kf6WQ-ZBJR_1dGvuQ",
+            "k": "gMcFhGi_6pDXulX1UHkuww",
+            "hex_kid": "5c4f38f647fa590f9904947fd5d1afb9",
+            "hex_k": "80c7058468bfea90d7ba55f550792ec3",
+            "hex_pair": "5c4f38f647fa590f9904947fd5d1afb9:80c7058468bfea90d7ba55f550792ec3"
+        },
+        {
+            "kty": "oct",
+            "kid": "Vpo0blB1Womv2kt-X0eDLg",
+            "k": "gZQVgoA8q-IaiwgBiQiQBA",
+            "hex_kid": "569a346e50755a89afda4b7e5f47832e",
+            "hex_k": "81941582803cabe21a8b080189089004",
+            "hex_pair": "569a346e50755a89afda4b7e5f47832e:81941582803cabe21a8b080189089004"
+        },
+        {
+            "kty": "oct",
+            "kid": "rU388SZRU5ePjWLpvG-Egg",
+            "k": "n3EVka59Gl4-k_J-UJpH9Q",
+            "hex_kid": "ad4dfcf1265153978f8d62e9bc6f8482",
+            "hex_k": "9f711591ae7d1a5e3e93f27e509a47f5",
+            "hex_pair": "ad4dfcf1265153978f8d62e9bc6f8482:9f711591ae7d1a5e3e93f27e509a47f5"
+        },
+        {
+            "kty": "oct",
+            "kid": "RIC9vsGwX1u28iJ9QoTwRQ",
+            "k": "Ah_3MedC9LMKVDI-rcVSqw",
+            "hex_kid": "4480bdbec1b05f5bb6f2227d4284f045",
+            "hex_k": "021ff731e742f4b30a54323eadc552ab",
+            "hex_pair": "4480bdbec1b05f5bb6f2227d4284f045:021ff731e742f4b30a54323eadc552ab"
+        }
+    ]
+}
