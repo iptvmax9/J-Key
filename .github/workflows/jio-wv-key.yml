@@ -25,10 +25,8 @@ jobs:
       - name: Install dependencies
         run: pip install pywidevine
 
-      - name: Decode WVD from secret
-        if: ${{ secrets.WVD_B64 != '' }}
-        run: |
-          echo "${{ secrets.WVD_B64 }}" | base64 -d > device.wvd
+      - name: Check device.wvd
+        run: ls -lh device.wvd
 
       - name: Fetch Widevine KID:KEY
         env:
